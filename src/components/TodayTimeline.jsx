@@ -18,18 +18,19 @@ const TodayTimeline = ({ hourly, currentDate }) => {
       }))
       .filter((item) => {
         const itemDate = item.fullTime.split("T")[0];
-        const itemTime = new Date(item.fullTime);
-
-        return (
-          itemDate === currentDate && itemTime <= now // ⬅️ only till current time
-        );
+        return itemDate === currentDate;
       }) || [];
+
+  const currentHour = new Date().getHours();
 
   return (
     <div className="timeline-container">
       <div className="timeline-row">
         {todayData.map((item, i) => (
-          <div key={i} className="timeline-card">
+          <div
+            key={i}
+            className={`timeline-card ${item.hour === currentHour ? "active" : ""}`}
+          >
             <p className="time">{item.hour}:00</p>
 
             <p className="emoji">{getWeatherEmoji(item.temp, item.precip)}</p>

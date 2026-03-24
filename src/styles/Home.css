@@ -33,6 +33,28 @@
   margin-top: 10px 0px;
 }
 
+@media (max-width: 768px) {
+  .main-temp {
+    font-size: 40px;
+  }
+
+  .time {
+    font-size: 18px;
+  }
+
+  .city {
+    font-size: 16px;
+  }
+
+  .feels {
+    font-size: 14px;
+  }
+
+  .condition {
+    font-size: 16px;
+  }
+}
+
 .next-page-btn {
   position: absolute;
   top: 20px;
@@ -53,6 +75,16 @@
   cursor: pointer;
 
   transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .next-page-btn {
+    width: 90px;
+    height: 50px;
+    font-size: 14px;
+    top: 10px;
+    right: 10px;
+  }
 }
 
 /* Hover effect */
@@ -130,6 +162,18 @@
   gap: 20px;
 }
 
+@media (max-width: 500px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .last-row {
   display: flex;
   justify-content: center;
@@ -171,6 +215,12 @@
   margin-top: 20px;
 }
 
+@media (max-width: 768px) {
+  .charts {
+    gap: 15px;
+  }
+}
+
 .timeline-container {
   margin-top: 30px;
   color: white;
@@ -181,6 +231,9 @@
   gap: 15px;
   overflow-x: auto;
   padding: 10px 20px;
+
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
 .timeline-row::-webkit-scrollbar {
@@ -216,6 +269,28 @@
 .timeline-card .temp {
   font-size: 14px;
   font-weight: 600;
+}
+
+.weekly-row {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .timeline-card {
+    min-width: 60px;
+    font-size: 12px;
+  }
+
+.day-card {
+  cursor: pointer;
+  min-width: 70px;
+  }
+}
+
+.day-card:active {
+  transform: scale(0.95);
 }
 
 .section-title {
@@ -316,21 +391,24 @@
 }
 
 .chart-scroll {
-  overflow-x: auto;   
+  cursor: grab;
+}
+
+.chart-scroll:active {
+  cursor: crosshair;
 }
 
 .chart-wrapper {
   width: 1200px;      
 }
 
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
+@media (max-width: 768px) {
+  .chart-wrapper {
+    width: 100%;
   }
-}
 
-@media (max-width: 500px) {
-  .grid {
-    grid-template-columns: 1fr;
+
+.chart-scroll {
+    overflow-x: hidden; 
   }
 }

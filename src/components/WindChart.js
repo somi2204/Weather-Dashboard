@@ -1,4 +1,5 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -9,8 +10,17 @@ import {
 } from "recharts";
 
 function WindChart({ data }) {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    useEffect(() => {
+        const handleResize = () => {
+          setIsMobile(window.innerWidth < 768);
+        };
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+      }, []);
+
   return (
-    <div style={{ width: "100%", height: 300 }}>
+    <div style={{ width: isMobile ? "100%" : "1800px", height: 300 }}>
       <h3>💨 Hourly Wind Speed</h3>
 
       <ResponsiveContainer width="100%" height="100%">
@@ -21,13 +31,13 @@ function WindChart({ data }) {
           <XAxis 
             dataKey="time" 
             interval={2}
-            tick={{ fill: "#000", fontSize: 18 }}
+            tick={{ fill: "#000", fontSize: isMobile ? 10 : 18 }}
             axisLine={false}     
             tickLine={false}
             tickMargin={12} 
           />
 
-          <YAxis label={{ value: "km/h", fill: "#000" , angle: -90, position: "insideLeft" }} tick={{ fill: "#000", fontSize: 18   }} axisLine={false}
+          <YAxis label={{ value: "km/h", fill: "#000" , angle: -90, position: "insideLeft" }} tick={{ fill: "#000", fontSize: isMobile ? 10 : 18   }} axisLine={false}
           tickLine={false}/>
 
           <Tooltip />

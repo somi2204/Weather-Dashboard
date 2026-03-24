@@ -19,6 +19,7 @@ function Page2({ lat, lon }) {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [data, setData] = useState(null);
+  const isMobile = window.innerWidth < 768;
 
   const handleFetch = async () => {
     if (!startDate || !endDate || !lat || !lon) {
@@ -78,9 +79,9 @@ function Page2({ lat, lon }) {
           {/* 🌡️ Temperature */}
           <div className="card chart-scroll">
             <h3> 🌡️ Temperature Trends</h3>
-            <LineChart width={chartData.length * 60} height={300} data={chartData}>
-              <XAxis dataKey="date" tick={{ fill: "#000"}} axisLine={false} tickLine={false} fontSize={18} tickMargin={15}/>
-              <YAxis tick={{ fill: "#000" }} axisLine={false} fontSize={18} tickLine={false}/>
+            <LineChart width={isMobile ? 350 : chartData.length * 60} height={isMobile ? 220 : 300} data={chartData}>
+              <XAxis dataKey="date" tick={{ fill: "#000"}} axisLine={false} tickLine={false} fontSize={isMobile ? 10 : 18} tickMargin={15}/>
+              <YAxis tick={{ fill: "#000" }} axisLine={false} fontSize={isMobile ? 10 : 18} tickLine={false}/>
               <Legend />
               <Tooltip
               contentStyle={{
@@ -102,9 +103,9 @@ function Page2({ lat, lon }) {
           {/* 🌧️ Precipitation */}
           <div className="card chart-scroll">
             <h3> 🌧️ Precipitation</h3>
-            <BarChart width={chartData.length * 60} height={300} data={chartData}>
-              <XAxis dataKey="date" tick={{ fill: "#000" }} axisLine={false} tickLine={false} fontSize={18} tickMargin={15}/>
-              <YAxis tick={{ fill: "#000" }} axisLine={false} fontSize={18} tickLine={false}/>
+            <BarChart width={isMobile ? 350 : chartData.length * 60} height={isMobile ? 220 : 300} data={chartData}>
+              <XAxis dataKey="date" tick={{ fill: "#000" }} axisLine={false} tickLine={false} fontSize={isMobile ? 10 : 18} tickMargin={15}/>
+              <YAxis tick={{ fill: "#000" }} axisLine={false} fontSize={isMobile ? 10 : 18} tickLine={false}/>
               <Tooltip
               contentStyle={{
                 backgroundColor: "#1e1e2f",
@@ -120,9 +121,9 @@ function Page2({ lat, lon }) {
           {/* 💨 Wind */}
           <div className="card chart-scroll">
             <h3> 💨 Max Wind Speed</h3>
-            <LineChart width={chartData.length * 60} height={300} data={chartData}>
-              <XAxis dataKey="date" tick={{ fill: "#000" }} axisLine={false} tickLine={false} fontSize={18} tickMargin={15}/>
-              <YAxis tick={{ fill: "#000" }} axisLine={false} fontSize={18} tickLine={false}/>
+            <LineChart width={isMobile ? 350 : chartData.length * 60} height={isMobile ? 220 : 300} data={chartData}>
+              <XAxis dataKey="date" tick={{ fill: "#000" }} axisLine={false} tickLine={false} fontSize={isMobile ? 10 : 18} tickMargin={15}/>
+              <YAxis tick={{ fill: "#000" }} axisLine={false} fontSize={isMobile ? 10 : 18} tickLine={false}/>
               <Tooltip
               contentStyle={{
                 backgroundColor: "#1e1e2f",
@@ -141,8 +142,8 @@ function Page2({ lat, lon }) {
         <h3>🌅 Sun Cycle (Sunrise & Sunset)</h3>
 
         <LineChart
-        width={chartData.length * 60}
-        height={300}
+        width={isMobile ? 350 : chartData.length * 60}
+        height={isMobile ? 220 : 300}
         data={data.time.map((t, i) => {
       const sunrise = new Date(data.sunrise[i]);
       const sunset = new Date(data.sunset[i]);
@@ -159,8 +160,8 @@ function Page2({ lat, lon }) {
       };
     })}
   >
-    <XAxis dataKey="date" tick={{ fill: "#000" }} axisLine={false} tickLine={false} fontSize={18} tickMargin={15}/>
-    <YAxis domain={[0, 24]} tick={{ fill: "#000" }} axisLine={false} fontSize={18} tickLine={false} />
+    <XAxis dataKey="date" tick={{ fill: "#000" }} axisLine={false} tickLine={false} fontSize={isMobile ? 10 : 18} tickMargin={15}/>
+    <YAxis domain={[0, 24]} tick={{ fill: "#000" }} axisLine={false} fontSize={isMobile ? 10 : 18} tickLine={false} />
     <Legend />
     <Tooltip
       contentStyle={{
