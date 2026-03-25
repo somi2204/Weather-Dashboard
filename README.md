@@ -1,70 +1,113 @@
-# Getting Started with Create React App
+<img width="1065" height="612" alt="image" src="https://github.com/user-attachments/assets/df08a40f-c051-4ac4-ae31-9c9bf3d5e522" /># 🌤️ Weather Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern and responsive weather dashboard built using React that provides real-time weather insights and historical trend analysis through interactive visualizations.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Features
 
-### `npm start`
+- 🌡️ Real-time weather data (temperature, humidity, wind, UV index, etc.)
+- 📊 Hourly forecast with interactive charts
+- 📅 Historical weather trends analysis
+- 🌫️ Air quality monitoring (PM2.5 & PM10)
+- 🌅 Sunrise & Sunset tracking
+- 📱 Fully responsive design (mobile + desktop)
+- 🎨 Modern UI with gradients, glass effects, and smooth charts
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🧠 Data Visualization
 
-### `npm test`
+Different chart types are used based on data nature:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Area Charts → Temperature, Humidity, Wind, Visibility  
+- Dual Area Chart → Air Quality (PM2.5 vs PM10)  
+- Bar + Line Chart → Precipitation  
+- Line Chart → Sunrise & Sunset  
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🛠️ Tech Stack
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Frontend: React.js  
+- Charts: Recharts  
+- Styling: CSS (custom gradients, glassmorphism UI)  
+- API: Open-Meteo API  
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 📂 Project Structure
+src/
+│── components/
+│ ├── TemperatureChart.js
+│ ├── HumidityChart.js
+│ ├── WindChart.js
+│ ├── VisibilityChart.js
+│ ├── AirQualityChart.js
+│ ├── PrecipitationChart.js
+│
+│── pages/
+│ ├── Home.js
+│ ├── Page2.js
+│
+│── styles/
+│ ├── Home.css
+│ ├── Page2.css
+│
+│── services/
+│ ├── weatherApi.js
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## ⚙️ Installation
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+git clone https://github.com/your-username/weather-dashboard.git
+cd weather-dashboard
+npm install
+npm start
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+API Used
+Open-Meteo (free weather API)
+No API key required
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Key Highlights
+Clean and structured UI design
+Data-driven chart selection
+Responsive layout with horizontal scroll for dense datasets
+Improved readability with custom tooltips and legends
 
-## Learn More
+Future Improvements
+Dark mode
+Chart animations
+Export data as CSV
+Location search functionality
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Screenshots
+Home Page
+<img width="1861" height="818" alt="image" src="https://github.com/user-attachments/assets/e12178bf-9a48-4490-9f01-2f3a7a07e643" />
+<img width="1902" height="667" alt="image" src="https://github.com/user-attachments/assets/7361a8d5-a036-48f4-bbda-89bdb43ba2ae" />
+<img width="1900" height="794" alt="image" src="https://github.com/user-attachments/assets/dbbba682-5b3e-4357-b9c1-8240ff9daad1" />
+<img width="1855" height="765" alt="image" src="https://github.com/user-attachments/assets/6704634e-c775-416d-ba6b-52ec82bdf42b" />
+<img width="1811" height="691" alt="image" src="https://github.com/user-attachments/assets/0f7d1f3b-56ee-4162-b85f-858501454e54" />
+<img width="1823" height="728" alt="image" src="https://github.com/user-attachments/assets/449eaf41-8019-499d-8136-acb0576d3098" />
+<img width="1841" height="724" alt="image" src="https://github.com/user-attachments/assets/e7f87913-0e45-4691-ac4d-105a85a6ecfb" />
+<img width="1846" height="767" alt="image" src="https://github.com/user-attachments/assets/08ccd6ec-b785-43a2-87a3-952021ebdc5e" />
+Page-2
+<img width="1859" height="474" alt="image" src="https://github.com/user-attachments/assets/60e4a43f-7456-45fe-8e8d-b243400461fd" />
+<img width="1866" height="725" alt="image" src="https://github.com/user-attachments/assets/56c6a75e-037c-46ce-bb0b-6fa6e9d62155" />
+<img width="1878" height="658" alt="image" src="https://github.com/user-attachments/assets/26439ebe-8e60-4929-bf86-bd29b97057ca" />
+<img width="1850" height="665" alt="image" src="https://github.com/user-attachments/assets/eff06110-5c58-4dfa-b877-aaaa5eae4e15" />
+<img width="1877" height="715" alt="image" src="https://github.com/user-attachments/assets/e2ac3cb1-2386-4e5a-8540-454b14545e68" />
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
