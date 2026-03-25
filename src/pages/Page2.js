@@ -93,7 +93,7 @@ function Page2({ lat, lon }) {
                   <XAxis dataKey="date" interval={0} />
                   <YAxis />
                   <Tooltip contentStyle={{
-                    background: "rgba(255,255,255,0.35)",  // 🔥 increased
+                    background: "rgba(255,255,255,0.35)",  
                     backdropFilter: "blur(10px)",
                     border: "1px solid rgba(255,255,255,0.4)",
                     borderRadius: "10px",
@@ -144,7 +144,7 @@ function Page2({ lat, lon }) {
                   <XAxis dataKey="date" interval={0} />
                   <YAxis />
                   <Tooltip contentStyle={{
-                    background: "rgba(255,255,255,0.35)",  // 🔥 increased
+                    background: "rgba(255,255,255,0.35)",  
                     backdropFilter: "blur(10px)",
                     border: "1px solid rgba(255,255,255,0.4)",
                     borderRadius: "10px",
@@ -178,7 +178,7 @@ function Page2({ lat, lon }) {
                   <XAxis dataKey="date" interval={0} />
                   <YAxis />
                   <Tooltip contentStyle={{
-                    background: "rgba(255,255,255,0.35)",  // 🔥 increased
+                    background: "rgba(255,255,255,0.35)",  
                     backdropFilter: "blur(10px)",
                     border: "1px solid rgba(255,255,255,0.4)",
                     borderRadius: "10px",
@@ -229,7 +229,7 @@ function Page2({ lat, lon }) {
                       return value;
                     }}
                     contentStyle={{
-                      background: "rgba(255,255,255,0.35)",  // 🔥 increased
+                      background: "rgba(255,255,255,0.35)",  
                       backdropFilter: "blur(10px)",
                       border: "1px solid rgba(255,255,255,0.4)",
                       borderRadius: "10px",
