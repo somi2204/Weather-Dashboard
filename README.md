@@ -39,24 +39,43 @@ Different chart types are used based on data nature:
 ## 📂 Project Structure
 
 src/
+
 │── components/
+
 │ ├── TemperatureChart.js
+
 │ ├── HumidityChart.js
+
 │ ├── WindChart.js
+
 │ ├── VisibilityChart.js
+
 │ ├── AirQualityChart.js
+
 │ ├── PrecipitationChart.js
+
 │
+
 │── pages/
+
 │ ├── Home.js
+
 │ ├── Page2.js
+
 │
+
 │── styles/
+
 │ ├── Home.css
+
 │ ├── Page2.css
+
 │
+
 │── services/
+
 │ ├── weatherApi.js
+
 
 🌍 API Used
 
