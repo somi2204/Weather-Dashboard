@@ -99,7 +99,7 @@ Location search functionality
 📸 Screenshots
 
 Home Page
-<img width="1861" height="818" alt="image" src="https://github.com/user-attachments/assets/e12178bf-9a48-4490-9f01-2f3a7a07e643" />
+<img width="1904" height="825" alt="image" src="https://github.com/user-attachments/assets/96ef0f65-52e9-4246-a07f-1d0e7ece0ddd" />
 <img width="1902" height="667" alt="image" src="https://github.com/user-attachments/assets/7361a8d5-a036-48f4-bbda-89bdb43ba2ae" />
 <img width="1900" height="794" alt="image" src="https://github.com/user-attachments/assets/dbbba682-5b3e-4357-b9c1-8240ff9daad1" />
 <img width="1855" height="765" alt="image" src="https://github.com/user-attachments/assets/6704634e-c775-416d-ba6b-52ec82bdf42b" />
