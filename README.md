@@ -37,6 +37,7 @@ Different chart types are used based on data nature:
 ---
 
 ## 📂 Project Structure
+
 src/
 │── components/
 │ ├── TemperatureChart.js
@@ -58,22 +59,26 @@ src/
 │ ├── weatherApi.js
 
 🌍 API Used
+
 Open-Meteo (free weather API)
 No API key required
 
 🎯 Key Highlights
+
 Clean and structured UI design
 Data-driven chart selection
 Responsive layout with horizontal scroll for dense datasets
 Improved readability with custom tooltips and legends
 
 📌 Future Improvements
+
 Dark mode
 Chart animations
 Export data as CSV
 Location search functionality
 
 📸 Screenshots
+
 Home Page
 <img width="1861" height="818" alt="image" src="https://github.com/user-attachments/assets/e12178bf-9a48-4490-9f01-2f3a7a07e643" />
 <img width="1902" height="667" alt="image" src="https://github.com/user-attachments/assets/7361a8d5-a036-48f4-bbda-89bdb43ba2ae" />
