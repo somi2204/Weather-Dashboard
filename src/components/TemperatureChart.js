@@ -1,37 +1,80 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import {
-  LineChart,
-  Line,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   Tooltip,
 } from "recharts";
 
 function TemperatureChart({ data }) {
-  return (
-    <div style={{ width: "1800", height: 300 }}>
-      <h3>📊 Hourly Temperature</h3>
 
-        <LineChart
-                      width={1800}   
-                      height={300}
-                      data={data}
-                      margin={{ top: 10, right: 30, left: 10, bottom: 20 }}
-                      >
-          <XAxis 
-          dataKey="time" 
-          interval={0}
-          tick={{ fill: "#000", fontSize: 18 }}  
-          axisLine={false}     
-          tickLine={false}
-          tickMargin={12} 
+  // dynamic width for scroll
+  const chartWidth = Math.max(data.length * 60, 300);
+
+  return (
+    <div className="chart-scroll">
+      <h3 style={{ textAlign: "center" }}>
+        🌡️ Hourly Temperature
+      </h3>
+
+      <div className="chart-wrapper">
+        <AreaChart
+          width={chartWidth}
+          height={300}
+          data={data}
+          margin={{ top: 20, right: 50, left: 20, bottom: 40 }}
+        >
+          <XAxis
+            dataKey="time"
+            interval={0}
+            tick={{ fill: "#000", fontSize: 18 }}
+            axisLine={false}
+            tickLine={false}
+            tickMargin={10}
+            minTickGap={15}
           />
-          <YAxis label={{value: "°C", fill: "#000", angle: -90, position: "insideLeft" }} tick={{ fill: "#000", fontSize: 18 }}   axisLine={false}     // ❌ removes left vertical line
-          tickLine={false}/>
-          <Tooltip />
-          <Line type="monotone" dataKey="temp" stroke="#dc7826" strokeWidth={3}/>
-        </LineChart>
+
+          <YAxis
+            label={{
+              value: "°C",
+              angle: -90,
+              position: "insideLeft",
+              fill: "#000",
+            }}
+            tick={{ fill: "#000", fontSize: 18 }}
+            axisLine={false}
+            tickLine={false}
+          />
+
+          {/* Glass Tooltip */}
+          <Tooltip
+            contentStyle={{
+              background: "rgba(255,255,255,0.2)",
+              backdropFilter: "blur(8px)",
+              border: "1px solid rgba(255,255,255,0.3)",
+              borderRadius: "10px",
+            }}
+          />
+
+          {/* Gradient fill */}
+          <defs>
+            <linearGradient id="tempGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#ff7e5f" stopOpacity={0.6} />
+              <stop offset="100%" stopColor="#feb47b" stopOpacity={0.1} />
+            </linearGradient>
+          </defs>
+
+          <Area
+            type="monotone"
+            dataKey="temp"
+            stroke="#ff7e5f"
+            fill="url(#tempGradient)"
+            strokeWidth={3}
+            dot={false}   
+          />
+        </AreaChart>
+      </div>
     </div>
   );
 }

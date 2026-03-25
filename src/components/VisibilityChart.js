@@ -1,54 +1,80 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import {
-  LineChart,
-  Line,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   Tooltip,
 } from "recharts";
 
 function VisibilityChart({ data }) {
-const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  useEffect(() => {
-      const handleResize = () => {
-        setIsMobile(window.innerWidth < 768);
-      };
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }, []);
+
+  // dynamic width for scroll
+  const chartWidth = Math.max(data.length * 60, 300);
 
   return (
-    <div style={{ width:isMobile ? "100%" : "1800px", height: 300 }}>
-      <h3>👁️ Hourly Visibility (km)</h3>
-        <LineChart
-                      width={isMobile ? 350 : 1800}   
-                      height={300}
-                      data={data}
-                      margin={{ top: 10, right: 30, left: 10, bottom: 20 }}
-                      >
+    <div className="chart-scroll">
+      <h3 style={{ textAlign: "center" }}>
+        👁️ Hourly Visibility (km)
+      </h3>
 
-          <XAxis 
-            dataKey="time" 
+      <div className="chart-wrapper">
+        <AreaChart
+          width={chartWidth}
+          height={300}
+          data={data}
+          margin={{ top: 20, right: 50, left: 20, bottom: 40 }}
+        >
+          <XAxis
+            dataKey="time"
             interval={0}
-            tick={{ fill: "#000", fontSize: isMobile ? 10 : 18 }}
-            axisLine={false}     
+            tick={{ fill: "#000", fontSize: 18 }}
+            axisLine={false}
             tickLine={false}
-            tickMargin={12}
+            tickMargin={10}
+            minTickGap={15}
           />
 
-          <YAxis tick={{ fill: "#000", fontSize: isMobile ? 10 : 18 }} axisLine={false}    
-          tickLine={false}/>
+          <YAxis
+            label={{
+              value: "km",
+              angle: -90,
+              position: "insideLeft",
+              fill: "#000",
+            }}
+            tick={{ fill: "#000", fontSize: 18 }}
+            axisLine={false}
+            tickLine={false}
+          />
 
-          <Tooltip />
+          {/* Glass Tooltip */}
+          <Tooltip
+            contentStyle={{
+              background: "rgba(255,255,255,0.2)",
+              backdropFilter: "blur(8px)",
+              border: "1px solid rgba(255,255,255,0.3)",
+              borderRadius: "10px",
+            }}
+          />
 
-          <Line 
-            type="monotone" 
-            dataKey="visibility" 
-            stroke="#f59e0b"   // orange
+          {/* Gradient */}
+          <defs>
+            <linearGradient id="visibilityGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#f59e0b" stopOpacity={0.6} />
+              <stop offset="100%" stopColor="#f59e0b" stopOpacity={0.1} />
+            </linearGradient>
+          </defs>
+
+          <Area
+            type="monotone"
+            dataKey="visibility"
+            stroke="#f59e0b"
+            fill="url(#visibilityGradient)"
             strokeWidth={3}
+            dot={false}
           />
-        </LineChart>
+        </AreaChart>
+      </div>
     </div>
   );
 }

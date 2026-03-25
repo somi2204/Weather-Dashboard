@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import "../styles/Page2.css";
 import { fetchHistoricalData } from "../services/weatherApi";
 import {
+  AreaChart,
+  Area,
   LineChart,
   Line,
   XAxis,
   YAxis,
   Tooltip,
-  BarChart,
-  Bar, 
-  Legend,
+  ComposedChart,
+  Bar,
 } from "recharts";
 import { useNavigate } from "react-router-dom";
 
@@ -19,7 +20,6 @@ function Page2({ lat, lon }) {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [data, setData] = useState(null);
-  const isMobile = window.innerWidth < 768;
 
   const handleFetch = async () => {
     if (!startDate || !endDate || !lat || !lon) {
@@ -37,151 +37,216 @@ function Page2({ lat, lon }) {
     }
 
     const res = await fetchHistoricalData(lat, lon, startDate, endDate);
-    console.log(res);
-
     setData(res?.daily || null);
   };
 
-  // 🧠 Transform data for charts
+  // Transform data
   const chartData =
     data?.time?.map((t, i) => ({
-      date: t.slice(5), // cleaner date
+      date: t.slice(5),
       min: data.temperature_2m_min[i],
       max: data.temperature_2m_max[i],
       mean: data.temperature_2m_mean[i],
       precip: data.precipitation_sum[i],
       wind: data.windspeed_10m_max[i],
-      sunrise: data.sunrise[i],
-      sunset: data.sunset[i],
     })) || [];
 
   return (
     <div className="page2">
 
-      {/* 🔙 Back Button */}
-      <button className="back-btn" onClick={() => navigate("/")}>
-        ← Back
-      </button>
-
-      <h2>📊 Historical Weather</h2>
-
-      {/* 📅 Date Picker */}
-      <div className="date-picker">
-        <input type="date" onChange={(e) => setStartDate(e.target.value)} />
-        <input type="date" onChange={(e) => setEndDate(e.target.value)} />
-        <button onClick={handleFetch}>Analyze</button>
+      {/* HEADER */}
+      <div className="page2-header">
+        <div className="header-left">
+          <button className="back-btn" onClick={() => navigate("/")}>
+            ← Back
+          </button>
+        </div>
+        <h2>📊 Weather Trends Analysis</h2>
       </div>
 
-      {/* 📊 Charts */}
+      {/* CONTROL PANEL */}
+      <div className="control-panel">
+        <h3>📅 Select Date Range</h3>
+
+        <div className="date-picker">
+          <input type="date" onChange={(e) => setStartDate(e.target.value)} />
+          <input type="date" onChange={(e) => setEndDate(e.target.value)} />
+          <button onClick={handleFetch}>Analyze</button>
+        </div>
+      </div>
+
+      {/* CHARTS */}
       {data && (
         <div className="charts">
 
-          {/* 🌡️ Temperature */}
-          <div className="card chart-scroll">
-            <h3> 🌡️ Temperature Trends</h3>
-            <LineChart width={isMobile ? 350 : chartData.length * 60} height={isMobile ? 220 : 300} data={chartData}>
-              <XAxis dataKey="date" tick={{ fill: "#000"}} axisLine={false} tickLine={false} fontSize={isMobile ? 10 : 18} tickMargin={15}/>
-              <YAxis tick={{ fill: "#000" }} axisLine={false} fontSize={isMobile ? 10 : 18} tickLine={false}/>
-              <Legend />
-              <Tooltip
-              contentStyle={{
-                backgroundColor: "#1e1e2f",
-                border: "none",
-                borderRadius: "10px",
-                color: "#fff"
-              }}
-            />
-              <Line dataKey="min" stroke="blue" strokeWidth={2} dot={{ r: 4 }}
-              activeDot={{ r: 6 }}/>
-              <Line dataKey="mean" stroke="orange" strokeWidth={2} dot={{ r: 4 }}
-              activeDot={{ r: 6 }} />
-              <Line dataKey="max" stroke="red" strokeWidth={2} dot={{ r: 4 }}
-              activeDot={{ r: 6 }}/>
-            </LineChart>
+          {/* TEMPERATURE */}
+          <div className="card">
+            <h3 className="chart-title">🌡️ Temperature Trends</h3>
+
+            <div className="chart-scroll">
+              <div className="chart-wrapper">
+                <AreaChart
+                  width={Math.max(chartData.length * 70, 600)}
+                  height={300}
+                  data={chartData}
+                >
+                  <XAxis dataKey="date" interval={0} />
+                  <YAxis />
+                  <Tooltip contentStyle={{
+                    background: "rgba(255,255,255,0.35)",  // 🔥 increased
+                    backdropFilter: "blur(10px)",
+                    border: "1px solid rgba(255,255,255,0.4)",
+                    borderRadius: "10px",
+                  }}/>
+
+                  <defs>
+                    <linearGradient id="minGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="blue" stopOpacity={0.5} />
+                      <stop offset="100%" stopColor="blue" stopOpacity={0.1} />
+                    </linearGradient>
+
+                    <linearGradient id="meanGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="orange" stopOpacity={0.5} />
+                      <stop offset="100%" stopColor="orange" stopOpacity={0.1} />
+                    </linearGradient>
+
+                    <linearGradient id="maxGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="red" stopOpacity={0.5} />
+                      <stop offset="100%" stopColor="red" stopOpacity={0.1} />
+                    </linearGradient>
+                  </defs>
+
+                  <Area type="monotone" dataKey="min" stroke="blue" fill="url(#minGrad)" dot={false}/>
+                  <Area type="monotone" dataKey="mean" stroke="orange" fill="url(#meanGrad)" dot={false}/>
+                  <Area type="monotone" dataKey="max" stroke="red" fill="url(#maxGrad)" dot={false}/>
+                </AreaChart>
+              </div>
+            </div>
+
+            <div className="custom-legend">
+              <span style={{ color: "blue" }}>• min</span>
+              <span style={{ color: "orange" }}>• mean</span>
+              <span style={{ color: "red" }}>• max</span>
+            </div>
           </div>
 
-          {/* 🌧️ Precipitation */}
-          <div className="card chart-scroll">
-            <h3> 🌧️ Precipitation</h3>
-            <BarChart width={isMobile ? 350 : chartData.length * 60} height={isMobile ? 220 : 300} data={chartData}>
-              <XAxis dataKey="date" tick={{ fill: "#000" }} axisLine={false} tickLine={false} fontSize={isMobile ? 10 : 18} tickMargin={15}/>
-              <YAxis tick={{ fill: "#000" }} axisLine={false} fontSize={isMobile ? 10 : 18} tickLine={false}/>
-              <Tooltip
-              contentStyle={{
-                backgroundColor: "#1e1e2f",
-                border: "none",
-                borderRadius: "10px",
-                color: "#fff"
-              }}
-            />
-              <Bar dataKey="precip" fill="#2c6a93" />
-            </BarChart>
+          {/* PRECIPITATION */}
+          <div className="card">
+            <h3 className="chart-title">🌧️ Precipitation</h3>
+
+            <div className="chart-scroll">
+              <div className="chart-wrapper">
+                <ComposedChart
+                  width={Math.max(chartData.length * 70, 600)}
+                  height={300}
+                  data={chartData}
+                >
+                  <XAxis dataKey="date" interval={0} />
+                  <YAxis />
+                  <Tooltip contentStyle={{
+                    background: "rgba(255,255,255,0.35)",  // 🔥 increased
+                    backdropFilter: "blur(10px)",
+                    border: "1px solid rgba(255,255,255,0.4)",
+                    borderRadius: "10px",
+                  }}/>
+
+                  <defs>
+                    <linearGradient id="rainGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#4a4cc2" stopOpacity={0.7} />
+                      <stop offset="100%" stopColor="#4a4cc2" stopOpacity={0.2} />
+                    </linearGradient>
+                  </defs>
+
+                  <Bar dataKey="precip" fill="url(#rainGrad)" radius={[6,6,0,0]} />
+                  <Line type="monotone" dataKey="precip" stroke="#1e3a8a" dot={false}/>
+                </ComposedChart>
+              </div>
+            </div>
           </div>
 
-          {/* 💨 Wind */}
-          <div className="card chart-scroll">
-            <h3> 💨 Max Wind Speed</h3>
-            <LineChart width={isMobile ? 350 : chartData.length * 60} height={isMobile ? 220 : 300} data={chartData}>
-              <XAxis dataKey="date" tick={{ fill: "#000" }} axisLine={false} tickLine={false} fontSize={isMobile ? 10 : 18} tickMargin={15}/>
-              <YAxis tick={{ fill: "#000" }} axisLine={false} fontSize={isMobile ? 10 : 18} tickLine={false}/>
-              <Tooltip
-              contentStyle={{
-                backgroundColor: "#1e1e2f",
-                border: "none",
-                borderRadius: "10px",
-                color: "#fff"
-              }}
-            />
-              <Line dataKey="wind" stroke="#9b59b6" strokeWidth={3} dot={{ r: 4 }}
-              activeDot={{ r: 6 }} />
-            </LineChart>
+          {/* WIND */}
+          <div className="card">
+            <h3 className="chart-title">💨 Max Wind Speed</h3>
+
+            <div className="chart-scroll">
+              <div className="chart-wrapper">
+                <AreaChart
+                  width={Math.max(chartData.length * 70, 600)}
+                  height={300}
+                  data={chartData}
+                >
+                  <XAxis dataKey="date" interval={0} />
+                  <YAxis />
+                  <Tooltip contentStyle={{
+                    background: "rgba(255,255,255,0.35)",  // 🔥 increased
+                    backdropFilter: "blur(10px)",
+                    border: "1px solid rgba(255,255,255,0.4)",
+                    borderRadius: "10px",
+                  }}/>
+
+                  <defs>
+                    <linearGradient id="windGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#10b981" stopOpacity={0.6} />
+                      <stop offset="100%" stopColor="#10b981" stopOpacity={0.1} />
+                    </linearGradient>
+                  </defs>
+
+                  <Area type="monotone" dataKey="wind" stroke="#10b981" fill="url(#windGrad)" dot={false}/>
+                </AreaChart>
+              </div>
+            </div>
           </div>
-        
-        {/* 🌅 Sun Cycle */}
-          <div className="card chart-scroll">
-        <h3>🌅 Sun Cycle (Sunrise & Sunset)</h3>
 
-        <LineChart
-        width={isMobile ? 350 : chartData.length * 60}
-        height={isMobile ? 220 : 300}
-        data={data.time.map((t, i) => {
-      const sunrise = new Date(data.sunrise[i]);
-      const sunset = new Date(data.sunset[i]);
+          {/* SUNRISE SUNSET */}
+          <div className="card">
+            <h3 className="chart-title">🌅 Sunrise & Sunset</h3>
 
-      return {
-        date: t.slice(5),
+            <div className="chart-scroll">
+              <div className="chart-wrapper">
+                <LineChart
+                  width={Math.max(chartData.length * 70, 600)}
+                  height={300}
+                  data={data.time.map((t, i) => {
+                    const sunrise = new Date(data.sunrise[i]);
+                    const sunset = new Date(data.sunset[i]);
 
-        // convert time to decimal hours
-        sunrise:
-          sunrise.getHours() + sunrise.getMinutes() / 60,
+                    return {
+                      date: t.slice(5),
+                      sunrise: sunrise.getHours() + sunrise.getMinutes() / 60,
+                      sunset: sunset.getHours() + sunset.getMinutes() / 60,
+                      sunriseLabel: sunrise.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+                      sunsetLabel: sunset.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+                    };
+                  })}
+                >
+                  <XAxis dataKey="date" interval={0} />
+                  <YAxis domain={[0,24]} />
 
-        sunset:
-          sunset.getHours() + sunset.getMinutes() / 60,
-      };
-    })}
-  >
-    <XAxis dataKey="date" tick={{ fill: "#000" }} axisLine={false} tickLine={false} fontSize={isMobile ? 10 : 18} tickMargin={15}/>
-    <YAxis domain={[0, 24]} tick={{ fill: "#000" }} axisLine={false} fontSize={isMobile ? 10 : 18} tickLine={false} />
-    <Legend />
-    <Tooltip
-      contentStyle={{
-        backgroundColor: "#1e1e2f",
-        border: "none",
-        borderRadius: "10px",
-        color: "#fff"
-      }}
-      formatter={(value) => {
-        const hours = Math.floor(value);
-        const minutes = Math.round((value - hours) * 60);
-        return `${hours}:${minutes.toString().padStart(2, "0")}`;
-      }}
-    />
-    <Line dataKey="sunrise" stroke="#f1c40f" name="Sunrise 🌅" strokeWidth={2} dot={{ r: 4 }}
-  activeDot={{ r: 6 }}/>
-    <Line dataKey="sunset" stroke="#e67e22" name="Sunset 🌇" strokeWidth={2} dot={{ r: 4 }}
-  activeDot={{ r: 6 }} />
-  </LineChart>
-</div>
+                  <Tooltip
+                    formatter={(value, name, props) => {
+                      if (name === "sunrise") return props.payload.sunriseLabel;
+                      if (name === "sunset") return props.payload.sunsetLabel;
+                      return value;
+                    }}
+                    contentStyle={{
+                      background: "rgba(255,255,255,0.35)",  // 🔥 increased
+                      backdropFilter: "blur(10px)",
+                      border: "1px solid rgba(255,255,255,0.4)",
+                      borderRadius: "10px",
+                    }}
+                  />
+
+                  <Line dataKey="sunrise" stroke="#9b8738" dot={false} strokeWidth={2}/>
+                  <Line dataKey="sunset" stroke="#e67e22" dot={false} strokeWidth={2}/>
+                </LineChart>
+              </div>
+            </div>
+
+            <div className="custom-legend">
+              <span style={{ color: "#bf9e19"}}>• sunrise </span>
+              <span style={{ color: "#e67e22" }}>• sunset</span>
+            </div>
+          </div>
 
         </div>
       )}

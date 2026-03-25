@@ -1,69 +1,106 @@
-import React from "react";
-import { useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import {
-  LineChart,
-  Line,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   Tooltip,
-  Legend,
 } from "recharts";
 
 function AirQualityChart({ data }) {
   const scrollRef = useRef();
-    useEffect(() => {
+
+  // auto-center scroll
+  useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollLeft =
-        (scrollRef.current.scrollWidth - scrollRef.current.clientWidth) / 2;
+        (scrollRef.current.scrollWidth -
+          scrollRef.current.clientWidth) / 2;
     }
   }, [data]);
 
+  // dynamic width
+  const chartWidth = Math.max(data.length * 60, 400);
+
   return (
-    <div ref={scrollRef}>
-    <div style={{ width: 1800, height: 300 }}>
-      <h3 style={{ textAlign: "center" }}>🌫️ Air Quality (PM10 v/s PM2.5)</h3>
+    <div className="chart-scroll" ref={scrollRef}>
+      <h3 style={{ textAlign: "center" }}>
+        🌫️ Air Quality (PM10 vs PM2.5)
+      </h3>
 
-        <LineChart
-              width={1800}   // 🔥 this creates horizontal scroll
-              height={300}
-              data={data}
-              margin={{ top: 10, right: 30, left: 10, bottom: 20 }}
-              >
+      <div className="chart-wrapper">
+        <AreaChart
+          width={chartWidth}
+          height={300}
+          data={data}
+          margin={{ top: 20, right: 50, left: 20, bottom: 40 }}
+        >
+          <XAxis
+            dataKey="time"
+            interval={0}
+            tick={{ fill: "#000", fontSize: 18 }}
+            axisLine={false}
+            tickLine={false}
+            tickMargin={10}
+            minTickGap={15}
+          />
 
-          <XAxis dataKey="time" interval={0} tick={{ fill: "#000", fontSize: 18 }} axisLine={false}     
-            tickLine={false} tickMargin={12} />
+          <YAxis
+            tick={{ fill: "#000", fontSize: 18 }}
+            axisLine={false}
+            tickLine={false}
+          />
 
-          <YAxis tick={{ fill: "#000", fontSize: 18 }} axisLine={false}     
-            tickLine={false}/>
+          {/* Glass Tooltip */}
+          <Tooltip
+            contentStyle={{
+              background: "rgba(255,255,255,0.2)",
+              backdropFilter: "blur(8px)",
+              border: "1px solid rgba(255,255,255,0.3)",
+              borderRadius: "10px",
+            }}
+          />
 
-          <Tooltip />
-          <Legend />
+          {/* Gradients */}
+          <defs>
+            <linearGradient id="pm10Gradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#ef4444" stopOpacity={0.6} />
+              <stop offset="100%" stopColor="#ef4444" stopOpacity={0.1} />
+            </linearGradient>
+
+            <linearGradient id="pm25Gradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#22c55e" stopOpacity={0.6} />
+              <stop offset="100%" stopColor="#22c55e" stopOpacity={0.1} />
+            </linearGradient>
+          </defs>
 
           {/* PM10 */}
-          <Line 
-            type="monotone" 
-            dataKey="pm10" 
-            stroke="#ef4444"   // red
-            strokeWidth={3}
-            dot={{ r: 3 }}
+          <Area
+            type="monotone"
+            dataKey="pm10"
+            stroke="#ef4444"
+            fill="url(#pm10Gradient)"
+            strokeWidth={2.5}
+            dot={false}
           />
 
           {/* PM2.5 */}
-          <Line 
-            type="monotone" 
-            dataKey="pm25" 
-            stroke="#22c55e"   // green
-            strokeWidth={3}
-            dot={{ r: 3 }}
+          <Area
+            type="monotone"
+            dataKey="pm25"
+            stroke="#22c55e"
+            fill="url(#pm25Gradient)"
+            strokeWidth={2.5}
+            dot={false}
           />
-        </LineChart>
+        </AreaChart>
+      </div>
 
-      {data.length === 0 && (
-        <p style={{ textAlign: "center" }}>
-          No air quality data available 🌫️
-        </p>
-      )}
-    </div>
+      {/* Custom Legend (clean UI like your screenshot) */}
+      <div className="custom-legend">
+        <span style={{ color: "#ef4444" }}>• pm10</span>
+        <span style={{ color: "#22c55e" }}>• pm25</span>
+      </div>
     </div>
   );
 }
