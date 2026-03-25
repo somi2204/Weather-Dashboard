@@ -6,8 +6,6 @@ const getWeatherEmoji = (temp, precip) => {
 };
 
 const TodayTimeline = ({ hourly, currentDate }) => {
-  const now = new Date();
-
   const todayData =
     hourly?.time
       ?.map((time, index) => ({
