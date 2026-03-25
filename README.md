@@ -1,4 +1,4 @@
-<img width="1065" height="612" alt="image" src="https://github.com/user-attachments/assets/df08a40f-c051-4ac4-ae31-9c9bf3d5e522" /># 🌤️ Weather Dashboard
+# 🌤️ Weather Dashboard
 
 A modern and responsive weather dashboard built using React that provides real-time weather insights and historical trend analysis through interactive visualizations.
 
@@ -57,31 +57,23 @@ src/
 │── services/
 │ ├── weatherApi.js
 
-## ⚙️ Installation
-
-```bash
-git clone https://github.com/your-username/weather-dashboard.git
-cd weather-dashboard
-npm install
-npm start
-
-API Used
+🌍 API Used
 Open-Meteo (free weather API)
 No API key required
 
-Key Highlights
+🎯 Key Highlights
 Clean and structured UI design
 Data-driven chart selection
 Responsive layout with horizontal scroll for dense datasets
 Improved readability with custom tooltips and legends
 
-Future Improvements
+📌 Future Improvements
 Dark mode
 Chart animations
 Export data as CSV
 Location search functionality
 
-Screenshots
+📸 Screenshots
 Home Page
 <img width="1861" height="818" alt="image" src="https://github.com/user-attachments/assets/e12178bf-9a48-4490-9f01-2f3a7a07e643" />
 <img width="1902" height="667" alt="image" src="https://github.com/user-attachments/assets/7361a8d5-a036-48f4-bbda-89bdb43ba2ae" />
