@@ -1,20 +1,21 @@
-const getWeatherEmoji = (temp, precip) => {
+// @ts-nocheck
+const getWeatherEmoji = (temp: number, precip: number): string => {
   if (precip > 0) return "🌧️";
   if (temp <= 15) return "❄️";
   if (temp <= 25) return "🌤️";
   return "☀️";
 };
 
-const TodayTimeline = ({ hourly, currentDate }) => {
+const TodayTimeline = ({ hourly, currentDate }: { hourly?: { time?: string[]; temperature_2m?: number[]; precipitation?: number[] }; currentDate: string }) => {
   const todayData =
     hourly?.time
-      ?.map((time, index) => ({
+      ?.map((time: string, index: number) => ({
         fullTime: time,
         hour: new Date(time).getHours(),
-        temp: hourly.temperature_2m[index],
-        precip: hourly.precipitation[index],
+        temp: hourly.temperature_2m?.[index] || 0,
+        precip: hourly.precipitation?.[index] || 0,
       }))
-      .filter((item) => {
+      .filter((item: any) => {
         const itemDate = item.fullTime.split("T")[0];
         return itemDate === currentDate;
       }) || [];
@@ -24,7 +25,7 @@ const TodayTimeline = ({ hourly, currentDate }) => {
   return (
     <div className="timeline-container">
       <div className="timeline-row">
-        {todayData.map((item, i) => (
+        {todayData.map((item: any, i: number) => (
           <div
             key={i}
             className={`timeline-card ${item.hour === currentHour ? "active" : ""}`}

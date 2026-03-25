@@ -88,10 +88,12 @@ body {
 .hero {
   text-align: center;
   margin-bottom: 20px;
+  color: #a44266;
 }
 
 .time {
-  font-size: 18px;
+  font-size: 25px;
+  font-weight: 600;
   opacity: 0.8;
 }
 
@@ -171,8 +173,8 @@ body {
 .card.good { background: rgba(76, 175, 80, 0.25); }
 .card.moderate { background: rgba(255, 193, 7, 0.25); }
 .card.unhealthy { background: rgba(255, 152, 0, 0.25); }
-.card.danger { background: rgba(244, 67, 54, 0.25); }
-.card.hazard { background: rgba(183, 28, 28, 0.35); }
+.card.danger { background: rgba(220, 129, 122, 0.628); }
+.card.hazard { background: rgba(231, 71, 71, 0.744); }
 
 /* CHART SECTION */
 .charts-section {
